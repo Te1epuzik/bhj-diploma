@@ -8,27 +8,33 @@ const createRequest = (options = {
 	data: {
 		mail,
 		password
+	},
+	callback: (err, response) => {
+		if (err) {
+			console.log(err);
+			return;
+		}
+
+		console.log(response);
 	}
 }) => {
-	return new Promise((resolve, reject) => {
-		const xhr = new XMLHttpRequest();
-		xhr.open(options.method, options.url, true);
-		xhr.responseType = 'json';
-		
-		xhr.addEventListener('load', event => {
-			event.preventDefault();
+	const xhr = new XMLHttpRequest();
+	xhr.open(options.method, options.url, true);
+	xhr.responseType = 'json';
 
-			if (xhr.status < 400) {
-				resolve(xhr.response);
-			} else {
-				reject(xhr.response);
-			}
-		});
+	xhr.addEventListener('load', event => {
+		event.preventDefault();
 
-		if (options.data) {
-			xhr.send(JSON.stringify(options.data));
+		if (xhr.status < 400) {
+			callback(null, xhr.response);
 		} else {
-			xhr.send();
+			callback(xhr.response, null);
 		}
 	});
+
+	if (options.data) {
+		xhr.send(JSON.stringify(options.data));
+	} else {
+		xhr.send();
+	}
 };
