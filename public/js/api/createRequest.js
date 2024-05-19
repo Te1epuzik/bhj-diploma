@@ -3,12 +3,10 @@
  * на сервер.
  * */
 const createRequest = (options = {
-	method: 'GET',
+	method,
 	url,
-	data: {
-		mail,
-		password
-	},
+	responseType,
+	data,
 	callback: (err, response) => {
 		if (err) {
 			console.log(err);
@@ -20,15 +18,15 @@ const createRequest = (options = {
 }) => {
 	const xhr = new XMLHttpRequest();
 	xhr.open(options.method, options.url, true);
-	xhr.responseType = 'json';
+	xhr.responseType = options.responseType;
 
 	xhr.addEventListener('load', event => {
 		event.preventDefault();
 
 		if (xhr.status < 400) {
-			callback(null, xhr.response);
+			options.callback(null, xhr.response);
 		} else {
-			callback(xhr.response, null);
+			options.callback(xhr.response, null);
 		}
 	});
 

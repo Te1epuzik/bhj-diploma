@@ -13,6 +13,7 @@ class Entity {
 		return createRequest({
 			method: 'GET',
 			url: Entity.URL,
+			responseType: 'json',
 			data: data,
 			callback: callback
 		});
@@ -27,6 +28,7 @@ class Entity {
 		return createRequest({
 			method: 'PUT',
 			url: Entity.URL,
+			responseType: 'json',
 			data: data,
 			callback: callback
 		});
@@ -40,6 +42,7 @@ class Entity {
 		return createRequest({
 			method: 'DELETE',
 			url: Entity.URL,
+			responseType: 'json',
 			data: data,
 			callback: callback
 		});
